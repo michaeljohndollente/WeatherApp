@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mjapp.weatherapp.R
@@ -71,7 +70,12 @@ fun WeatherCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "${data.temperatureCelsius}°C",
-                    fontSize = 50.sp,
+                    fontSize = 30.sp,
+                    color = Color.White
+                )
+                Text(
+                    text = "${convertCelsiusToFahrenheit(data.temperatureCelsius)}°F",
+                    fontSize = 30.sp,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -110,14 +114,4 @@ fun WeatherCard(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MyComposablePreview() {
-    WeatherCard(
-        state = WeatherState(),
-        backgroundColor = Color.Black,
-        modifier = Modifier.padding(16.dp)
-    )
 }

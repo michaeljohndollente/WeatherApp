@@ -48,5 +48,10 @@ fun HourlyWeatherDisplay(
             color = textColor,
             fontWeight = FontWeight.Bold
         )
+        Text(
+            text = "${convertCelsiusToFahrenheit(weatherData.temperatureCelsius)}°F",
+            color = textColor,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
