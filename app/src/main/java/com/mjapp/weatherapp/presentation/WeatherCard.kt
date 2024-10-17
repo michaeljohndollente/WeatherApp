@@ -15,6 +15,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +30,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mjapp.weatherapp.R
+import kotlinx.coroutines.delay
+import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
@@ -35,6 +43,17 @@ fun WeatherCard(
     backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
+
+    var currentTime by remember { mutableStateOf(LocalTime.now()) }
+    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            currentTime = LocalTime.now()
+            delay(1000)
+        }
+    }
+
     state.weatherInfo?.currentWeatherData?.let { data ->
         Card(
             shape = RoundedCornerShape(10.dp),
@@ -52,15 +71,21 @@ fun WeatherCard(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Today ${
-                        data.time.format(
-                            DateTimeFormatter.ofPattern("HH:mm")
-                        )
-                    }",
-                    modifier = Modifier.align(Alignment.End),
-                    color = Color.White
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Text(
+                        text = "${LocalDate.now()}",
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                    Text(
+                        text = currentTime.format(timeFormatter),
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
                 Image(
                     painter = painterResource(id = data.weatherType.iconRes),
@@ -70,18 +95,18 @@ fun WeatherCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "${data.temperatureCelsius}°C",
-                    fontSize = 30.sp,
+                    fontSize = 25.sp,
                     color = Color.White
                 )
                 Text(
                     text = "${convertCelsiusToFahrenheit(data.temperatureCelsius)}°F",
-                    fontSize = 30.sp,
+                    fontSize = 25.sp,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = data.weatherType.weatherDesc,
-                    fontSize = 20.sp,
+                    fontSize = 18.sp,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(32.dp))

@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mjapp.weatherapp.domain.weather.WeatherData
 import java.time.format.DateTimeFormatter
@@ -46,12 +45,10 @@ fun HourlyWeatherDisplay(
         Text(
             text = "${weatherData.temperatureCelsius}°C",
             color = textColor,
-            fontWeight = FontWeight.Bold
         )
         Text(
             text = "${convertCelsiusToFahrenheit(weatherData.temperatureCelsius)}°F",
             color = textColor,
-            fontWeight = FontWeight.Bold
         )
     }
 }
